@@ -207,7 +207,8 @@ export default class AdvancedTabContent extends Component {
           { isEthereumNetwork
             ? <div>
               <div className="advanced-tab__fee-chart__title">{ t('liveGasPricePredictions') }</div>
-              {!gasEstimatesLoading
+              { /* TODO 주석 처리 함. 차후 차트 관련 루틴을 찾게되면, 변경 필요. 20190725 */
+                !gasEstimatesLoading
                 ? <GasPriceChart {...gasChartProps} updateCustomGasPrice={updateCustomGasPrice} />
                 : <Loading />
               }

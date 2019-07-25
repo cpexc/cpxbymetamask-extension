@@ -11,6 +11,9 @@
   "exposeDescription": {
     "message": "계정을 현재 웹 사이트에 노출하십시오. 기존 dapps에 유용합니다."
   },
+  "chartOnlyAvailableEth": {
+    "message": "Chart only available on Ethereum networks."
+  },
   "confirmExpose": {
     "message": "계정을 현재 웹 사이트에 공개 하시겠습니까?"
   },
@@ -194,6 +197,12 @@
   "buyCoinSwitchExplainer": {
     "message": "코인 스위치는 최상의 속도로 300 개 이상의 크립토 카드를 교환하는 원 스톱 목적지입니다."
   },
+  "buyWithWyre": {
+    "message": "Buy ETH with Wyre"
+  },
+  "buyWithWyreDescription": {
+    "message": "Wyre lets you use a credit card to deposit ETH right in to your MetaMask account."
+  },
   "bytes": {
     "message": "바이트"
   },
@@ -311,6 +320,9 @@
   "continueToCoinSwitch": {
     "message": "코인 스위치 계속하기"
   },
+  "continueToWyre": {
+    "message": "Continue to Wyre"
+  },
   "contractDeployment": {
     "message": "컨트랙트 배포"
   },
@@ -421,7 +433,7 @@
     "message": "코인 입금하기"
   },
   "depositEther": {
-    "message": "이더리움 입금하기"
+    "message": "알트코인 입금하기"
   },
   "depositFiat": {
     "message": "현금으로 입금하기"

@@ -70,6 +70,8 @@ import { addHexPrefix } from 'ethereumjs-util'
 import { getAdjacentGasPrices, extrapolateY } from '../gas-price-chart/gas-price-chart.utils'
 import { getMaxModeOn } from '../../../../pages/send/send-content/send-amount-row/amount-max-button/amount-max-button.selectors'
 import { calcMaxAmount } from '../../../../pages/send/send-content/send-amount-row/amount-max-button/amount-max-button.utils'
+// add 20190725 dadfkim@hanmail.net
+import { CPX_MAINNET_CODE, CPX_TESTNET_CODE } from '../../../../../../app/scripts/controllers/network/enums'
 
 const mapStateToProps = (state, ownProps) => {
   const { selectedAddressTxList } = state.metamask
@@ -107,9 +109,9 @@ const mapStateToProps = (state, ownProps) => {
   const isMainnet = getIsMainnet(state)
   const showFiat = Boolean(isMainnet || showFiatInTestnets)
 
-  const newTotalEth = maxModeOn ? addHexWEIsToRenderableEth(balance, '0x0') : addHexWEIsToRenderableEth(value, customGasTotal)
+  const newTotalEth = maxModeOn ? addHexWEIsToRenderableEth(state, balance, '0x0') : addHexWEIsToRenderableEth(state, value, customGasTotal)
 
-  const sendAmount = maxModeOn ? subtractHexWEIsFromRenderableEth(balance, customGasTotal) : addHexWEIsToRenderableEth(value, '0x0')
+  const sendAmount = maxModeOn ? subtractHexWEIsFromRenderableEth(state, balance, customGasTotal) : addHexWEIsToRenderableEth(state, value, '0x0')
 
   const insufficientBalance = maxModeOn ? false : !isBalanceSufficient({
     amount: value,
@@ -146,10 +148,10 @@ const mapStateToProps = (state, ownProps) => {
     },
     infoRowProps: {
       originalTotalFiat: addHexWEIsToRenderableFiat(value, customGasTotal, currentCurrency, conversionRate),
-      originalTotalEth: addHexWEIsToRenderableEth(value, customGasTotal),
+      originalTotalEth: addHexWEIsToRenderableEth(state, value, customGasTotal),
       newTotalFiat: showFiat ? newTotalFiat : '',
       newTotalEth,
-      transactionFee: addHexWEIsToRenderableEth('0x0', customGasTotal),
+      transactionFee: addHexWEIsToRenderableEth(state, '0x0', customGasTotal),
       sendAmount,
     },
     transaction: txData || transaction,
@@ -305,18 +307,32 @@ function getTxParams (state, selectedTransaction = {}) {
   }
 }
 
-function addHexWEIsToRenderableEth (aHexWEI, bHexWEI) {
+function addHexWEIsToRenderableEth (state, aHexWEI, bHexWEI) {
+
+  // add change alt coin 20190725 dadfkim@hanmail.net
+  const { metamask: { network } } = state
+  let currentCurrency = ' ETH'
+  if ( network == CPX_MAINNET_CODE || network == CPX_TESTNET_CODE )
+  currentCurrency = ' CPX'
+
   return pipe(
     addHexWEIsToDec,
-    formatETHFee
-  )(aHexWEI, bHexWEI)
+    partialRight(formatETHFee, [currentCurrency])
+  )(aHexWEI, bHexWEI, currentCurrency)
 }
 
-function subtractHexWEIsFromRenderableEth (aHexWEI, bHexWei) {
+function subtractHexWEIsFromRenderableEth (state, aHexWEI, bHexWei) {
+  
+  // add change alt coin 20190725 dadfkim@hanmail.net
+  const { metamask: { network } } = state
+  let currentCurrency = ' ETH'
+  if ( network == CPX_MAINNET_CODE || network == CPX_TESTNET_CODE )
+  currentCurrency = ' CPX'
+
   return pipe(
     subtractHexWEIsToDec,
-    formatETHFee
-  )(aHexWEI, bHexWei)
+    partialRight(formatETHFee, [currentCurrency])
+  )(aHexWEI, bHexWei, currentCurrency)
 }
 
 function addHexWEIsToRenderableFiat (aHexWEI, bHexWEI, convertedCurrency, conversionRate) {

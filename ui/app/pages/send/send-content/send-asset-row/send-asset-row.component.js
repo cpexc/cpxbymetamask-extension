@@ -113,7 +113,7 @@ export default class SendAssetRow extends Component {
         onClick={() => this.selectToken()}
       >
         <div className="send-v2__asset-dropdown__asset-icon">
-          <Identicon diameter={36} />
+          <Identicon diameter={36} network={network} />
         </div>
         <div className="send-v2__asset-dropdown__asset-data">
           <div className="send-v2__asset-dropdown__symbol">{currentCurrency}</div>

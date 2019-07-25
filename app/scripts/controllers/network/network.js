@@ -223,20 +223,20 @@ module.exports = class NetworkController extends EventEmitter {
     log.info('NetworkController - configureCpxStandardProvider', type)
     const networkClient = createJsonCpxClient({ rpcUrl })
     // hack to add a 'rpc' network with chainId
-    /*
-    networks.networkList['rpc'] = {
+    networks.networkList[type] = {
       chainId: chainId,
       rpcUrl,
-      ticker: ticker || 'CPX',
+      ticker: 'CPX',
       nickname,
+      rpcPrefs: rpcUrl,
     }
-    */
+    
     // setup networkConfig
     var settings = {
-      //network: chainId,
+      network: chainId,
       ticker: 'CPX',
     }
-    //settings = extend(settings, networks.networkList['rpc'])
+    settings = extend(settings, networks.networkList[type])
     this.networkConfig.putState(settings)
     this._setNetworkClient(networkClient)
   }

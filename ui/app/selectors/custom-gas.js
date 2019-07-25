@@ -20,6 +20,8 @@ import {
   calcGasTotal,
 } from '../pages/send/send.utils'
 import { addHexPrefix } from 'ethereumjs-util'
+// add 20190725 dadfkim@hanmail.net
+import { CPX_MAINNET_CODE, CPX_TESTNET_CODE } from '../../../app/scripts/controllers/network/enums'
 
 const selectors = {
   formatTimeEstimate,
@@ -149,14 +151,20 @@ function basicPriceEstimateToETHTotal (estimate, gasLimit, numberOfDecimals = 9)
   })
 }
 
-function getRenderableEthFee (estimate, gasLimit, numberOfDecimals = 9) {
+// fix add network check and showing alt coin
+function getRenderableEthFee (network, estimate, gasLimit, numberOfDecimals = 9) {
+
+  // add change alt coin 20190725 dadfkim@hanmail.net
+  let currentCurrency = ' ETH'
+  if ( network == CPX_MAINNET_CODE || network == CPX_TESTNET_CODE )
+  currentCurrency = ' CPX'
+
   return pipe(
     x => conversionUtil(x, { fromNumericBase: 'dec', toNumericBase: 'hex' }),
     partialRight(basicPriceEstimateToETHTotal, [gasLimit, numberOfDecimals]),
-    formatETHFee
-  )(estimate, gasLimit)
+    partialRight(formatETHFee, [currentCurrency])
+  )(estimate, gasLimit, currentCurrency)
 }
-
 
 function getRenderableConvertedCurrencyFee (estimate, gasLimit, convertedCurrency, conversionRate) {
   return pipe(
@@ -248,19 +256,22 @@ function getRenderableBasicEstimateData (state, gasLimit) {
     },
   } = state
 
+  // add
+  const network= state.metamask.network
+
   return [
     {
       labelKey: 'slow',
-      feeInPrimaryCurrency: getRenderableEthFee(safeLow, gasLimit),
+      feeInPrimaryCurrency: getRenderableEthFee(network, safeLow, gasLimit),
       feeInSecondaryCurrency: showFiat
-        ? getRenderableConvertedCurrencyFee(safeLow, gasLimit, currentCurrency, conversionRate)
+        ? getRenderableConvertedCurrencyFee(network, safeLow, gasLimit, currentCurrency, conversionRate)
         : '',
       timeEstimate: safeLowWait && getRenderableTimeEstimate(safeLowWait),
       priceInHexWei: getGasPriceInHexWei(safeLow),
     },
     {
       labelKey: 'average',
-      feeInPrimaryCurrency: getRenderableEthFee(fast, gasLimit),
+      feeInPrimaryCurrency: getRenderableEthFee(network, fast, gasLimit),
       feeInSecondaryCurrency: showFiat
         ? getRenderableConvertedCurrencyFee(fast, gasLimit, currentCurrency, conversionRate)
         : '',
@@ -269,7 +280,7 @@ function getRenderableBasicEstimateData (state, gasLimit) {
     },
     {
       labelKey: 'fast',
-      feeInPrimaryCurrency: getRenderableEthFee(fastest, gasLimit),
+      feeInPrimaryCurrency: getRenderableEthFee(network, fastest, gasLimit),
       feeInSecondaryCurrency: showFiat
         ? getRenderableConvertedCurrencyFee(fastest, gasLimit, currentCurrency, conversionRate)
         : '',
@@ -300,13 +311,16 @@ function getRenderableEstimateDataForSmallButtonsFromGWEI (state) {
     },
   } = state
 
+  // add
+  const network= state.metamask.network
+
   return [
     {
       labelKey: 'slow',
       feeInSecondaryCurrency: showFiat
         ? getRenderableConvertedCurrencyFee(safeLow, gasLimit, currentCurrency, conversionRate)
         : '',
-      feeInPrimaryCurrency: getRenderableEthFee(safeLow, gasLimit, NUMBER_OF_DECIMALS_SM_BTNS, true),
+      feeInPrimaryCurrency: getRenderableEthFee(network, safeLow, gasLimit, NUMBER_OF_DECIMALS_SM_BTNS, true),
       priceInHexWei: getGasPriceInHexWei(safeLow, true),
     },
     {
@@ -314,7 +328,7 @@ function getRenderableEstimateDataForSmallButtonsFromGWEI (state) {
       feeInSecondaryCurrency: showFiat
         ? getRenderableConvertedCurrencyFee(fast, gasLimit, currentCurrency, conversionRate)
         : '',
-      feeInPrimaryCurrency: getRenderableEthFee(fast, gasLimit, NUMBER_OF_DECIMALS_SM_BTNS, true),
+      feeInPrimaryCurrency: getRenderableEthFee(network, fast, gasLimit, NUMBER_OF_DECIMALS_SM_BTNS, true),
       priceInHexWei: getGasPriceInHexWei(fast, true),
     },
     {
@@ -322,7 +336,7 @@ function getRenderableEstimateDataForSmallButtonsFromGWEI (state) {
       feeInSecondaryCurrency: showFiat
         ? getRenderableConvertedCurrencyFee(fastest, gasLimit, currentCurrency, conversionRate)
         : '',
-      feeInPrimaryCurrency: getRenderableEthFee(fastest, gasLimit, NUMBER_OF_DECIMALS_SM_BTNS, true),
+      feeInPrimaryCurrency: getRenderableEthFee(network, fastest, gasLimit, NUMBER_OF_DECIMALS_SM_BTNS, true),
       priceInHexWei: getGasPriceInHexWei(fastest, true),
     },
   ]

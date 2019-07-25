@@ -4,15 +4,13 @@ import {getMetaMaskAccounts} from '../../../../selectors/selectors'
 import { setSelectedToken } from '../../../../store/actions'
 
 function mapStateToProps (state) {
-  // add properties
-  const { metamask: { network } } = state
 
   return {
     tokens: state.metamask.tokens,
     selectedAddress: state.metamask.selectedAddress,
     selectedTokenAddress: state.metamask.selectedTokenAddress,
     accounts: getMetaMaskAccounts(state),
-    network,
+    network: state.metamask.network,
   }
 }
 
