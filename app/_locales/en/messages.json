@@ -222,6 +222,12 @@
   "buyCoinbaseExplainer": {
     "message": "Coinbase is the world’s most popular way to buy and sell Bitcoin, Ethereum, and Litecoin."
   },
+  "buyWithCPX": {
+    "message": "Buy on CPEXC"
+  },
+  "buyWithCPXDescription": {
+    "message": "CPEXC is the official market way to buy and sell Bitcoin, Ethereum, and CPX."
+  },
   "buyWithWyre": {
     "message": "Buy ETH with Wyre"
   },
@@ -359,6 +365,9 @@
   },
   "continueToCoinbase": {
     "message": "Continue to Coinbase"
+  },
+  "continueToCPX": {
+    "message": "Continue to CPEXC"
   },
   "continueToWyre": {
     "message": "Continue to Wyre"

@@ -8,12 +8,14 @@ const { getNetworkDisplayName } = require('../../../../../app/scripts/controller
 
 import Button from '../../ui/button'
 // add image change function 20190724 dadfkim@hanmail.net
-import { CPX_MAINNET_CODE, CPX_TESTNET_CODE } from '../../../../../app/scripts/controllers/network/enums'
+import { CPX_MAINNET_CODE, CPX_TESTNET_CODE, CPX_MAINNET, CPX_TESTNET } from '../../../../../app/scripts/controllers/network/enums'
 
 let DIRECT_DEPOSIT_ROW_TITLE
 let DIRECT_DEPOSIT_ROW_TEXT
 let WYRE_ROW_TITLE
 let WYRE_ROW_TEXT
+let CPX_ROW_TITLE
+let CPX_ROW_TEXT
 let FAUCET_ROW_TITLE
 let COINSWITCH_ROW_TITLE
 let COINSWITCH_ROW_TEXT
@@ -25,6 +27,7 @@ function mapStateToProps (state) {
   }
 }
 
+// add cpx market 20190726 dadfkim@hanmail.net
 function mapDispatchToProps (dispatch) {
   return {
     toWyre: (address) => {
@@ -32,6 +35,13 @@ function mapDispatchToProps (dispatch) {
     },
     toCoinSwitch: (address) => {
       dispatch(actions.buyEth({ service: 'coinswitch', address }))
+    },
+    toCpx: (network) => {
+      let cpxNetworkName = CPX_MAINNET
+      if ( network == CPX_TESTNET_CODE )
+        cpxNetworkName = CPX_TESTNET
+
+      dispatch(actions.buyEth({ service: cpxNetworkName }))
     },
     hideModal: () => {
       dispatch(actions.hideModal())
@@ -55,6 +65,8 @@ function DepositEtherModal (_, context) {
   DIRECT_DEPOSIT_ROW_TEXT = context.t('directDepositEtherExplainer')
   WYRE_ROW_TITLE = context.t('buyWithWyre')
   WYRE_ROW_TEXT = context.t('buyWithWyreDescription')
+  CPX_ROW_TITLE = context.t('buyWithCPX')
+  CPX_ROW_TEXT = context.t('buyWithCPXDescription')
   FAUCET_ROW_TITLE = context.t('testFaucet')
   COINSWITCH_ROW_TITLE = context.t('buyCoinSwitch')
   COINSWITCH_ROW_TEXT = context.t('buyCoinSwitchExplainer')
@@ -123,15 +135,16 @@ DepositEtherModal.prototype.renderRow = function ({
 }
 
 DepositEtherModal.prototype.render = function () {
-  const { network, toWyre, toCoinSwitch, address, toFaucet } = this.props
+  const { network, toWyre, toCoinSwitch, address, toFaucet, toCpx } = this.props
 
-  const isTestNetwork = ['3', '4', '5', '42'].find(n => n === network)
+  const isTestNetwork = ['3', '4', '5', '42', '1009'].find(n => n === network)
   const networkName = getNetworkDisplayName(network)
 
   // add image change function 20190724 dadfkim@hanmail.net
   let imagePath = './images/deposit-eth.svg'
+  let height = '60px';
   if ( network == CPX_MAINNET_CODE || network == CPX_TESTNET_CODE )
-    imagePath = './images/deposit-cpx.svg'
+    imagePath = './images/deposit-cpx.svg', height = '120px'
 
   return h('div.page-container.page-container--full-width.page-container--full-height', {}, [
 
@@ -159,6 +172,7 @@ DepositEtherModal.prototype.render = function () {
         this.renderRow({
           logo: h('img.deposit-ether-modal__logo', {
             src: imagePath,
+            height: {height},
           }),
           title: DIRECT_DEPOSIT_ROW_TITLE,
           text: DIRECT_DEPOSIT_ROW_TEXT,
@@ -186,6 +200,21 @@ DepositEtherModal.prototype.render = function () {
           text: WYRE_ROW_TEXT,
           buttonLabel: this.context.t('continueToWyre'),
           onButtonClick: () => toWyre(address),
+          hide: isTestNetwork,
+        }),
+
+        // add cpx market 20190726
+        this.renderRow({
+          logo: h('div.deposit-ether-modal__logo', {
+            style: {
+              backgroundImage: 'url(\'./images/cpx_stacked_logo.svg\')',
+              height: '120px',
+            },
+          }),
+          title: CPX_ROW_TITLE,
+          text: CPX_ROW_TEXT,
+          buttonLabel: this.context.t('continueToCPX'),
+          onButtonClick: () => toCpx(network),
           hide: isTestNetwork,
         }),
 
