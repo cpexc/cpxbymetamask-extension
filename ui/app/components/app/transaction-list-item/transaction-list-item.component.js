@@ -11,6 +11,8 @@ import { CONFIRM_TRANSACTION_ROUTE } from '../../../helpers/constants/routes'
 import { UNAPPROVED_STATUS, TOKEN_METHOD_TRANSFER } from '../../../helpers/constants/transactions'
 import { PRIMARY, SECONDARY } from '../../../helpers/constants/common'
 import { getStatusKey } from '../../../helpers/utils/transactions.util'
+// add 20190726 dadfkim@hanmail.net
+import { CPX_MAINNET_CODE, CPX_TESTNET_CODE } from '../../../../../app/scripts/controllers/network/enums'
 
 export default class TransactionListItem extends PureComponent {
   static propTypes = {
@@ -36,6 +38,7 @@ export default class TransactionListItem extends PureComponent {
     rpcPrefs: PropTypes.object,
     data: PropTypes.string,
     getContractMethodData: PropTypes.func,
+    network: PropTypes.string,
   }
 
   static defaultProps = {
@@ -57,6 +60,13 @@ export default class TransactionListItem extends PureComponent {
     } = this.props
     const { id, status } = transaction
     const { showTransactionDetails } = this.state
+    
+    // add grid 클릭 기능 제외 : metamask 자체 버그.. 20190726 버그 픽스가 되면 반영 하는 걸로..
+    // sentry 와 관계가 있는듯..
+    const { network } = this.props
+    if (network == CPX_MAINNET_CODE || network == CPX_TESTNET_CODE) {
+      showTransactionDetails = true
+    }
 
     if (status === UNAPPROVED_STATUS) {
       history.push(`${CONFIRM_TRANSACTION_ROUTE}/${id}`)
@@ -64,13 +74,28 @@ export default class TransactionListItem extends PureComponent {
     }
 
     if (!showTransactionDetails) {
-      this.context.metricsEvent({
-        eventOpts: {
-          category: 'Navigation',
-          action: 'Home',
-          name: 'Expand Transaction',
-        },
-      })
+
+      // add cpx network 20190726 dadfkim@hanmail.net
+      if ( network == CPX_MAINNET_CODE || network == CPX_TESTNET_CODE ) {
+        this.context.metricsEvent({
+          eventOpts: {
+            category: 'CPX Navigation',
+            action: 'CPX Home',
+            name: 'Expand Transaction',
+          },
+          customVariables: {
+            networkId: network,
+          },
+        })
+      }else{ 
+        this.context.metricsEvent({
+          eventOpts: {
+            category: 'Navigation',
+            action: 'Home',
+            name: 'Expand Transaction',
+          },
+        })
+      }
     }
 
     this.setState({ showTransactionDetails: !showTransactionDetails })
@@ -171,13 +196,14 @@ export default class TransactionListItem extends PureComponent {
       tokenData,
       transactionGroup,
       rpcPrefs,
+      network,
     } = this.props
     const { txParams = {} } = transaction
     const { showTransactionDetails } = this.state
     const toAddress = tokenData
       ? tokenData.params && tokenData.params[0] && tokenData.params[0].value || txParams.to
       : txParams.to
-
+    
     return (
       <div className="transaction-list-item">
         <div
