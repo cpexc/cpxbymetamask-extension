@@ -86,7 +86,7 @@ class ExtensionPlatform {
       {
       'type': 'basic',
       'title': title,
-      'iconUrl': extension.extension.getURL('../../images/icon-64.png'),
+      'iconUrl': extension.extension.getURL('../../images/icon-64_cpx.png'),
       'message': message,
       })
   }

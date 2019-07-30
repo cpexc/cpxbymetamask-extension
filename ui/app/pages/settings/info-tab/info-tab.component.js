@@ -110,7 +110,7 @@ export default class InfoTab extends PureComponent {
           <div className="settings-page__content-item settings-page__content-item--without-height">
             <div className="info-tab__logo-wrapper">
               <img
-                src="images/info-logo.png"
+                src="images/info-logo_cpx.png"
                 className="info-tab__logo"
               />
             </div>

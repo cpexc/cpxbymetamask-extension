@@ -3,7 +3,7 @@
   "short_name": "__MSG_appName__",
   "version": "6.7.2",
   "manifest_version": 2,
-  "author": "https://metamask.io",
+  "author": "https://www.cpublic.com",
   "description": "__MSG_appDescription__",
   "commands": {
     "_execute_browser_action": {
@@ -16,12 +16,12 @@
     }
   },
   "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
+    "16": "images/icon-16_cpx.png",
+    "128": "images/icon-128_cpx.png"
   },
   "applications": {
     "gecko": {
-      "id": "webextension@metamask.io",
+      "id": "info@cpublic.com",
       "strict_min_version": "53.0"
     }
   },
@@ -35,10 +35,10 @@
   },
   "browser_action": {
     "default_icon": {
-      "19": "images/icon-19.png",
-      "38": "images/icon-38.png"
+      "19": "images/icon-19_cpx.png",
+      "38": "images/icon-38_cpx.png"
     },
-    "default_title": "MetaMask",
+    "default_title": "CPX by MetaMask",
     "default_popup": "popup.html"
   },
   "content_scripts": [
@@ -73,7 +73,8 @@
     "webRequest",
     "*://*.eth/",
     "notifications",
-    "*://*.cpexc.com/"
+    "*://*.cpexc.com/",
+    "*://*.cpublic.com/"
   ],
   "web_accessible_resources": [
     "inpage.js",
@@ -81,7 +82,9 @@
   ],
   "externally_connectable": {
     "matches": [
-      "https://metamask.io/*"
+      "https://metamask.io/*",
+      "https://www.cpublic.com/*",
+      "https://www.cpexc.com/*"
     ],
     "ids": [
       "*"

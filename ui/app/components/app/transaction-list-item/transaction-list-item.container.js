@@ -15,6 +15,8 @@ import {
 } from '../../../ducks/gas/gas.duck'
 import { getIsMainnet, preferencesSelector, getSelectedAddress, conversionRateSelector, getKnownMethodData } from '../../../selectors/selectors'
 import { isBalanceSufficient } from '../../../pages/send/send.utils'
+//add 20190730
+import { getSelectedIdentity } from '../../../../../ui/app/selectors/selectors'
 
 const mapStateToProps = (state, ownProps) => {
   const { metamask: { accounts, provider, frequentRpcListDetail, network } } = state
@@ -43,6 +45,7 @@ const mapStateToProps = (state, ownProps) => {
     hasEnoughCancelGas,
     rpcPrefs,
     network,
+    selectedIdentity: getSelectedIdentity(state),
   }
 }
 

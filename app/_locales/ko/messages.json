@@ -93,7 +93,7 @@
     "message": "제안된 토큰 추가"
   },
   "addAcquiredTokens": {
-    "message": "메타마스크를 통해 획득한 토큰 추가"
+    "message": "CPX by 메타마스크를 통해 획득한 토큰 추가"
   },
   "advanced": {
     "message": "고급"
@@ -115,7 +115,7 @@
     "description": "애플리케이션 설명"
   },
   "appName": {
-    "message": "메타마스크",
+    "message": "CPX by 메타마스크",
     "description": "애플리케이션 이름"
   },
   "approve": {
@@ -180,7 +180,7 @@
     "message": "브라우저를 지원하지 않습니다..."
   },
   "builtInCalifornia": {
-    "message": "메타마스크는 캘리포니아에서 디자인되고 만들어졌습니다."
+    "message": "CPX by 메타마스크는 메타마스크 v6.7.2를 하드포크하여, CPULBIC 에서 수정되었습니다."
   },
   "buy": {
     "message": "구매"
@@ -1285,7 +1285,7 @@
     "message": "토큰 전송"
   },
   "sentEther": {
-    "message": "전송된 코인"
+    "message": "전송된 알트코인"
   },
   "sentTokens": {
     "message": "전송된 토큰"

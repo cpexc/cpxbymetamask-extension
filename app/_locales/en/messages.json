@@ -108,7 +108,7 @@
     "message": "Add Suggested Tokens"
   },
   "addAcquiredTokens": {
-    "message": "Add the tokens you've acquired using MetaMask"
+    "message": "Add the tokens you've acquired using CPX by MetaMask"
   },
   "agreeTermsOfService": {
     "message": "I agree to the Terms of Service"
@@ -133,7 +133,7 @@
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "CPX by MetaMask",
     "description": "The name of the application"
   },
   "approve": {
@@ -211,7 +211,7 @@
     "message": "Your Browser is not supported..."
   },
   "builtInCalifornia": {
-    "message": "MetaMask is designed and built in California."
+    "message": "CPX by MetaMask is hordfork on metamask v6.7.2 modified by cpublic."
   },
   "buy": {
     "message": "Buy"

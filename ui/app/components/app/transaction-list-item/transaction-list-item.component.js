@@ -13,6 +13,8 @@ import { PRIMARY, SECONDARY } from '../../../helpers/constants/common'
 import { getStatusKey } from '../../../helpers/utils/transactions.util'
 // add 20190726 dadfkim@hanmail.net
 import { CPX_MAINNET_CODE, CPX_TESTNET_CODE } from '../../../../../app/scripts/controllers/network/enums'
+// add 20190730
+import genAccountLink from '../../../../../ui/lib/account-link'
 
 export default class TransactionListItem extends PureComponent {
   static propTypes = {
@@ -39,6 +41,7 @@ export default class TransactionListItem extends PureComponent {
     data: PropTypes.string,
     getContractMethodData: PropTypes.func,
     network: PropTypes.string,
+    selectedIdentity: PropTypes.object,
   }
 
   static defaultProps = {
@@ -57,15 +60,20 @@ export default class TransactionListItem extends PureComponent {
     const {
       transaction,
       history,
+      selectedIdentity,
     } = this.props
     const { id, status } = transaction
     const { showTransactionDetails } = this.state
     
+    const { address } = selectedIdentity
+
     // add grid 클릭 기능 제외 : metamask 자체 버그.. 20190726 버그 픽스가 되면 반영 하는 걸로..
     // sentry 와 관계가 있는듯..
     const { network } = this.props
     if (network == CPX_MAINNET_CODE || network == CPX_TESTNET_CODE) {
+      // add transaction link 20190730 dadfkim@hanmail.net 보류..
       showTransactionDetails = true
+      // global.platform.openWindow({ url: genAccountLink(address, network) })
     }
 
     if (status === UNAPPROVED_STATUS) {
