@@ -167,12 +167,14 @@ function navigateTo (url) {
 }
 
 function etherscanLinkFor (tokenAddress, address, network) {
-  const prefix = prefixForNetwork(network)
+  
+  // fix 20190808 dadfkim@hanmail.net
   if ( network == 1004 ){
-    return `http://explorert2.cpexc.com`
+    return `http://explorert2.cpexc.com/token/${tokenAddress}?a=${address}`
   }else if ( network == 1009 ) {
-    return `http://40.78.2.104:3000`
+    return `http://testnet.explorert2.cpexc.com/token/${tokenAddress}?a=${address}`
   }else{
+    const prefix = prefixForNetwork(network)
     return `https://${prefix}etherscan.io/token/${tokenAddress}?a=${address}`
   }
 }

@@ -112,7 +112,7 @@ AccountDetailsDropdown.prototype.render = function () {
           eventOpts: {
             category: 'Navigation',
             action: 'Account Options',
-            name: 'Clicked View on Etherscan',
+            name: 'Clicked View on Block Explorer',
           },
         })
         viewOnEtherscan(address, network, rpcPrefs)

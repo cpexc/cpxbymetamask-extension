@@ -26,8 +26,8 @@ const GOERLI_DISPLAY_NAME = 'Goerli'
 const CPX_MAINNET_DISPLAY_NAME = 'Main CPX Network'
 const CPX_TESTNET_DISPLAY_NAME = 'test CPX Network'
 // add 
-const CPX_MAINNET_RPC_URL = 'http://wallet.cpexc.com:8545/'
-const CPX_TESTNET_RPC_URL = 'http://testnet.wallet.cpexc.com:8545/'
+const CPX_MAINNET_RPC_URL = 'https://wallet.cpexc.com'
+const CPX_TESTNET_RPC_URL = 'https://tnwallet.cpexc.com'
 
 module.exports = {
   ROPSTEN,

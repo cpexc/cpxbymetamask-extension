@@ -28,7 +28,7 @@ module.exports = function (address, network, rpcPrefs) {
       link = `http://explorert2.cpexc.com/addr/${address}`
       break
     case 1009: // cpx test net
-      link = `http://40.78.2.104:3000/addr/${address}`
+      link = `http://testnet.explorert2.cpexc.com/addr/${address}`
       break
     default:
       link = ''

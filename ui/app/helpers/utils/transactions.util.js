@@ -224,6 +224,14 @@ export function getBlockExplorerUrlForTx (networkId, hash, rpcPrefs = {}) {
   if (rpcPrefs.blockExplorerUrl) {
     return `${rpcPrefs.blockExplorerUrl}/tx/${hash}`
   }
-  const prefix = prefixForNetwork(networkId)
-  return `https://${prefix}etherscan.io/tx/${hash}`
+
+  // modi 20190808 dadfkim@hanmail.net
+  if ( networkId == 1004 ){
+    return `http://explorert2.cpexc.com/tx/${hash}`
+  }else if ( networkId == 1009 ) {
+    return `http://testnet.explorert2.cpexc.com/tx/${hash}`
+  }else{
+    const prefix = prefixForNetwork(networkId)
+    return `https://${prefix}etherscan.io/tx/${hash}`
+  }
 }

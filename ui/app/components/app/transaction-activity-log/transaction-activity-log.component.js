@@ -28,11 +28,19 @@ export default class TransactionActivityLog extends PureComponent {
   handleActivityClick = hash => {
     const { primaryTransaction } = this.props
     const { metamaskNetworkId } = primaryTransaction
+    
+    // modi 20190808 dadfkim@hanmail.net
+    let blockExplorerUrl
+    if ( metamaskNetworkId == 1004 ){
+      blockExplorerUrl = `http://explorert2.cpexc.com/tx/${hash}`
+    }else if ( metamaskNetworkId == 1009 ) {
+      blockExplorerUrl =  `http://testnet.explorert2.cpexc.com/tx/${hash}`
+    }else{
+      const prefix = prefixForNetwork(metamaskNetworkId)
+      blockExplorerUrl = `https://${prefix}etherscan.io/tx/${hash}`
+    }
 
-    const prefix = prefixForNetwork(metamaskNetworkId)
-    const etherscanUrl = `https://${prefix}etherscan.io/tx/${hash}`
-
-    global.platform.openWindow({ url: etherscanUrl })
+    global.platform.openWindow({ url: blockExplorerUrl })
   }
 
   renderInlineRetry (index, activity) {

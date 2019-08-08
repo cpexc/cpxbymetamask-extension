@@ -1775,7 +1775,7 @@
     "message": "View at $1"
   },
   "viewOnEtherscan": {
-    "message": "View on Etherscan"
+    "message": "View on Block Explorer"
   },
   "viewNetworkInfo": {
     "message": "View Network Info"
